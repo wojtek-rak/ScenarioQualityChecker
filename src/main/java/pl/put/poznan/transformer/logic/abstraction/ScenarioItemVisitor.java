@@ -10,16 +10,12 @@ public abstract class ScenarioItemVisitor<ResultType> implements IOperation<Resu
         return this;
     }
 
-    public ResultType evaluate(Scenario scenario){
-        visit(scenario.getRoot());
+    public ResultType execute(){
+        visit(scenario);
         return getResult();
     }
 
-    public ResultType execute(){
-        return evaluate(scenario);
-    }
-
-    public abstract void visit(ScenarioItem scenarioItem);
+    protected abstract void visit(Scenario scenario);
 
     protected abstract ResultType getResult();
 }
