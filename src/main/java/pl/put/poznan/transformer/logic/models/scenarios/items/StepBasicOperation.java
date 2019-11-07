@@ -6,10 +6,10 @@ import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScenarioBasicOperation extends ScenarioStep {
+public class StepBasicOperation extends ScenarioStep {
     public String operation;
 
-    public ScenarioBasicOperation(String operation){
+    public StepBasicOperation(String operation){
         this.operation = operation;
     }
 

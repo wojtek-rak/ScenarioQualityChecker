@@ -1,13 +1,12 @@
 package pl.put.poznan.transformer.logic.models.scenarios;
 
 import pl.put.poznan.transformer.logic.abstraction.ScenarioStep;
-import pl.put.poznan.transformer.logic.models.scenarios.items.ScenarioBasicOperation;
-import pl.put.poznan.transformer.logic.models.scenarios.items.ScenarioForEach;
-import pl.put.poznan.transformer.logic.models.scenarios.items.ScenarioIfElse;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepBasicOperation;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepForEach;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepIfElse;
 import pl.put.poznan.transformer.rest.models.RawScenario;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Scenario extends ArrayList<ScenarioStep> {
     public Scenario(){ }
@@ -18,21 +17,21 @@ public class Scenario extends ArrayList<ScenarioStep> {
 
     public static Scenario getTestScenario(){
         Scenario scenario = new Scenario();
-        scenario.add(new ScenarioBasicOperation("Bibliotekarz wybiera opcje dodania nowej pozycji książkowej"));
-        scenario.add(new ScenarioBasicOperation("Wyświetla się formularz."));
-        scenario.add(new ScenarioBasicOperation("Bibliotekarz podaje dane książki."));
+        scenario.add(new StepBasicOperation("Bibliotekarz wybiera opcje dodania nowej pozycji książkowej"));
+        scenario.add(new StepBasicOperation("Wyświetla się formularz."));
+        scenario.add(new StepBasicOperation("Bibliotekarz podaje dane książki."));
         Scenario ifScenario = new Scenario();
-        scenario.add(new ScenarioIfElse("Bibliotekarz pragnie dodać egzemplarze książki", ifScenario));
-        ifScenario.add(new ScenarioBasicOperation("Bibliotekarz wybiera opcję definiowania egzemplarzy"));
-        ifScenario.add(new ScenarioBasicOperation("System prezentuje zdefiniowane egzemplarze"));
+        scenario.add(new StepIfElse("Bibliotekarz pragnie dodać egzemplarze książki", ifScenario));
+        ifScenario.add(new StepBasicOperation("Bibliotekarz wybiera opcję definiowania egzemplarzy"));
+        ifScenario.add(new StepBasicOperation("System prezentuje zdefiniowane egzemplarze"));
         Scenario forEachScenario = new Scenario();
-        ifScenario.add(new ScenarioForEach("egzemplarz", forEachScenario));
-        forEachScenario.add(new ScenarioBasicOperation("Bibliotekarz wybiera opcję dodania egzemplarza"));
-        forEachScenario.add(new ScenarioBasicOperation("System prosi o podanie danych egzemplarza"));
-        forEachScenario.add(new ScenarioBasicOperation("Bibliotekarz podaje dane egzemplarza i zatwierdza."));
-        forEachScenario.add(new ScenarioBasicOperation("System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy."));
-        scenario.add(new ScenarioBasicOperation("Bibliotekarz zatwierdza dodanie książki."));
-        scenario.add(new ScenarioBasicOperation("System informuje o poprawnym dodaniu książki."));
+        ifScenario.add(new StepForEach("egzemplarz", forEachScenario));
+        forEachScenario.add(new StepBasicOperation("Bibliotekarz wybiera opcję dodania egzemplarza"));
+        forEachScenario.add(new StepBasicOperation("System prosi o podanie danych egzemplarza"));
+        forEachScenario.add(new StepBasicOperation("Bibliotekarz podaje dane egzemplarza i zatwierdza."));
+        forEachScenario.add(new StepBasicOperation("System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy."));
+        scenario.add(new StepBasicOperation("Bibliotekarz zatwierdza dodanie książki."));
+        scenario.add(new StepBasicOperation("System informuje o poprawnym dodaniu książki."));
         return scenario;
     }
 }

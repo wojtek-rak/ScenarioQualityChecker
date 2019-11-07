@@ -6,11 +6,11 @@ import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScenarioForEach extends ScenarioStep {
+public class StepForEach extends ScenarioStep {
     public String item;
     public Scenario foreachBlock;
 
-    public ScenarioForEach(String item, Scenario foreachBlock){
+    public StepForEach(String item, Scenario foreachBlock){
         this.item = item;
         this.foreachBlock = foreachBlock;
     }

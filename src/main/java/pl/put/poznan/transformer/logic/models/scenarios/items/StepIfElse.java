@@ -6,17 +6,17 @@ import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScenarioIfElse extends ScenarioStep {
+public class StepIfElse extends ScenarioStep {
     public String condition;
     public Scenario ifBlock;
     public Scenario elseBlock;
 
-    public ScenarioIfElse(String condition, Scenario ifBlock){
+    public StepIfElse(String condition, Scenario ifBlock){
         this.condition = condition;
         this.ifBlock = ifBlock;
     }
 
-    public ScenarioIfElse(String condition, Scenario ifBlock, Scenario elseBlock){
+    public StepIfElse(String condition, Scenario ifBlock, Scenario elseBlock){
         this.condition = condition;
         this.ifBlock = ifBlock;
         this.elseBlock = elseBlock;
