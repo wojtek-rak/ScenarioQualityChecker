@@ -1,5 +1,6 @@
 package pl.put.poznan.transformer.logic.models.scenarios;
 
+import com.jayway.jsonpath.JsonPath;
 import pl.put.poznan.transformer.logic.abstraction.ScenarioStep;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepBasicOperation;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepForEach;
@@ -9,11 +10,6 @@ import pl.put.poznan.transformer.rest.models.RawScenario;
 import java.util.ArrayList;
 
 public class Scenario extends ArrayList<ScenarioStep> {
-    public Scenario(){ }
-
-    public Scenario(RawScenario rawScenario){
-        // TODO implementation
-    }
 
     public static Scenario getTestScenario(){
         Scenario scenario = new Scenario();
