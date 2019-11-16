@@ -44,7 +44,7 @@ public class ScenarioController {
     @RequestMapping(value = "/ScenarioWithNumbering/{id}", method = RequestMethod.GET, produces = "text/plain")
     public String getScenarioWithNumbering(@PathVariable("id") int id) {
         return new ScenarioWithNumbering()
-                .setScenario(Scenario.getTestScenario())//GetScenario(id)
+                .setScenario(GetScenario(id))
                 .execute().scenario;
     }
 
