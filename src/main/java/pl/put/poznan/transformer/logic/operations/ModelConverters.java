@@ -4,8 +4,9 @@ import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepBasicOperation;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepElse;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepForEach;
-import pl.put.poznan.transformer.logic.models.scenarios.items.StepIfElse;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepIf;
 import pl.put.poznan.transformer.rest.models.RawScenario;
 
 import java.util.ArrayList;
@@ -20,8 +21,11 @@ public class ModelConverters {
         String keyword = ((LinkedHashMap) step).get("Keyword").toString();
         String name = ((LinkedHashMap) step).get("Name").toString();
         JSONArray stepsDeep = (JSONArray)((LinkedHashMap) step).get("Steps");
-            if(keyword.equals("IF") || keyword.equals("ELSE")){
-                scenario.add(new StepIfElse(name, findScenario(stepsDeep)));
+            if(keyword.equals("IF")){
+                scenario.add(new StepIf(name, findScenario(stepsDeep)));
+            }
+            else if (keyword.equals("ELSE")){
+                scenario.add(new StepElse(name, findScenario(stepsDeep)));
             }
             else if (keyword.equals("FOREACH")){
                 scenario.add(new StepForEach(name, findScenario(stepsDeep)));

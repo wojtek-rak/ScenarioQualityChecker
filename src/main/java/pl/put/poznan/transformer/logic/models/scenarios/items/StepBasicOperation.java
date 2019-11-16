@@ -17,4 +17,9 @@ public class StepBasicOperation extends ScenarioStep {
     public List<Scenario> getSubScenarios() {
         return new ArrayList<>(0);
     }
+
+    @Override
+    public String getScenarioHeader() {
+        return operation;
+    }
 }

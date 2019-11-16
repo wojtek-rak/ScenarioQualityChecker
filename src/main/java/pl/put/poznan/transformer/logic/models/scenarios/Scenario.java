@@ -1,11 +1,9 @@
 package pl.put.poznan.transformer.logic.models.scenarios;
 
-import com.jayway.jsonpath.JsonPath;
 import pl.put.poznan.transformer.logic.abstraction.ScenarioStep;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepBasicOperation;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepForEach;
-import pl.put.poznan.transformer.logic.models.scenarios.items.StepIfElse;
-import pl.put.poznan.transformer.rest.models.RawScenario;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepIf;
 
 import java.util.ArrayList;
 
@@ -17,7 +15,7 @@ public class Scenario extends ArrayList<ScenarioStep> {
         scenario.add(new StepBasicOperation("Wyświetla się formularz."));
         scenario.add(new StepBasicOperation("Bibliotekarz podaje dane książki."));
         Scenario ifScenario = new Scenario();
-        scenario.add(new StepIfElse("Bibliotekarz pragnie dodać egzemplarze książki", ifScenario));
+        scenario.add(new StepIf("Bibliotekarz pragnie dodać egzemplarze książki", ifScenario));
         ifScenario.add(new StepBasicOperation("Bibliotekarz wybiera opcję definiowania egzemplarzy"));
         ifScenario.add(new StepBasicOperation("System prezentuje zdefiniowane egzemplarze"));
         Scenario forEachScenario = new Scenario();
