@@ -3,10 +3,7 @@ package pl.put.poznan.transformer.rest.controllers;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.managers.DataManager;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
-import pl.put.poznan.transformer.logic.operations.CountScenarioItems;
-import pl.put.poznan.transformer.logic.operations.CreateScenario;
-import pl.put.poznan.transformer.logic.operations.ModelConverters;
-import pl.put.poznan.transformer.logic.operations.ScenarioWithNumbering;
+import pl.put.poznan.transformer.logic.operations.*;
 import pl.put.poznan.transformer.rest.models.CountScenarioItemsResponse;
 import pl.put.poznan.transformer.rest.models.CreateScenarioResponse;
 import pl.put.poznan.transformer.rest.models.RawScenario;
@@ -15,15 +12,22 @@ import pl.put.poznan.transformer.rest.models.ScenarioWithNumberingResponse;
 @RestController
 public class ScenarioController {
 
-    @RequestMapping(value = "/count", method = RequestMethod.GET, produces = "application/json")
-    public CountScenarioItemsResponse getCount() {
+    @RequestMapping(value = "/count/{id}", method = RequestMethod.GET, produces = "application/json")
+    public CountScenarioItemsResponse getCount(@PathVariable("id") int id) {
         return new CountScenarioItems()
-                .setScenario(Scenario.getTestScenario())
+                .setScenario(getScenario(id))
                 .execute();
     }
     public CountScenarioItemsResponse get_custom(Scenario scenario) {
         return new CountScenarioItems()
                 .setScenario(scenario)
+                .execute();
+    }
+
+    @RequestMapping(value = "/count/conditional/{id}", method = RequestMethod.GET, produces = "application/json")
+    public CountScenarioItemsResponse getConditionalCount(@PathVariable("id") int id) {
+        return new CountConditionalScenarioItems()
+                .setScenario(getScenario(id))
                 .execute();
     }
 
