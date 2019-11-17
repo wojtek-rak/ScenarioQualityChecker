@@ -17,7 +17,7 @@ public class CreateScenario implements IOperation<CreateScenarioResponse> {
     @Override
     public CreateScenarioResponse execute() {
         Scenario scenario = ModelConverters.RawToScenario(rawScenario);
-        int id = scenario.hashCode();
+        int id = DataManager.getInstance().scenarioCollection.getCounter() + 1;
         DataManager.getInstance().scenarioCollection.put(id, scenario);
         CreateScenarioResponse result = new CreateScenarioResponse();
         result.id = id;
