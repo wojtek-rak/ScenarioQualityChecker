@@ -3,8 +3,11 @@ package pl.put.poznan.transformer.logic.operations;
 import pl.put.poznan.transformer.logic.abstraction.IOperation;
 import pl.put.poznan.transformer.logic.managers.DataManager;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
+import pl.put.poznan.transformer.logic.models.scenarios.ScenarioRoot;
 import pl.put.poznan.transformer.rest.models.CreateScenarioResponse;
 import pl.put.poznan.transformer.rest.models.RawScenario;
+
+import java.util.UUID;
 
 public class CreateScenario implements IOperation<CreateScenarioResponse> {
     private RawScenario rawScenario;
@@ -16,11 +19,11 @@ public class CreateScenario implements IOperation<CreateScenarioResponse> {
 
     @Override
     public CreateScenarioResponse execute() {
-        Scenario scenario = ModelConverters.RawToScenario(rawScenario);
-        int id = scenario.hashCode();
-        DataManager.getInstance().scenarioCollection.put(id, scenario);
+        ScenarioRoot scenario = ModelConverters.RawToScenario(rawScenario);
+        String uniqueID = UUID.randomUUID().toString();
+        DataManager.getInstance().scenarioCollection.put(uniqueID, scenario);
         CreateScenarioResponse result = new CreateScenarioResponse();
-        result.id = id;
+        result.id = uniqueID;
         return result;
     }
 }
