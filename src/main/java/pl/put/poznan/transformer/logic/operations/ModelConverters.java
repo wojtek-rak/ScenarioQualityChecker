@@ -3,9 +3,11 @@ package pl.put.poznan.transformer.logic.operations;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
+import pl.put.poznan.transformer.logic.models.scenarios.ScenarioRoot;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepBasicOperation;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepElse;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepForEach;
-import pl.put.poznan.transformer.logic.models.scenarios.items.StepIfElse;
+import pl.put.poznan.transformer.logic.models.scenarios.items.StepIf;
 import pl.put.poznan.transformer.rest.models.RawScenario;
 
 import java.util.ArrayList;
@@ -20,8 +22,11 @@ public class ModelConverters {
         String keyword = ((LinkedHashMap) step).get("Keyword").toString();
         String name = ((LinkedHashMap) step).get("Name").toString();
         JSONArray stepsDeep = (JSONArray)((LinkedHashMap) step).get("Steps");
-            if(keyword.equals("IF") || keyword.equals("ELSE")){
-                scenario.add(new StepIfElse(name, findScenario(stepsDeep)));
+            if(keyword.equals("IF")){
+                scenario.add(new StepIf(name, findScenario(stepsDeep)));
+            }
+            else if (keyword.equals("ELSE")){
+                scenario.add(new StepElse(name, findScenario(stepsDeep)));
             }
             else if (keyword.equals("FOREACH")){
                 scenario.add(new StepForEach(name, findScenario(stepsDeep)));
@@ -33,12 +38,14 @@ public class ModelConverters {
         return scenario;
     }
 
-    public static Scenario RawToScenario(RawScenario rawScenario){
+    public static ScenarioRoot RawToScenario(RawScenario rawScenario){
         String json = rawScenario.getScenarioJson();
-        String title = JsonPath.read(json, "$.Title");
-        String system_actor = JsonPath.read(json, "$.['System Actor']");
-        ArrayList<String> actors = JsonPath.read(json, "$.Actors[*]");
         JSONArray steps = JsonPath.read(json, "$.Steps[*]");
-        return findScenario(steps);
+        ScenarioRoot scenarioRoot = new ScenarioRoot();
+        scenarioRoot.scenario = findScenario(steps);
+        scenarioRoot.title = JsonPath.read(json, "$.Title");
+        scenarioRoot.systemActor = JsonPath.read(json, "$.['System Actor']");
+        scenarioRoot.actors = JsonPath.read(json, "$.Actors[*]");
+        return scenarioRoot;
     }
 }

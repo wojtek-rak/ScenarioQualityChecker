@@ -18,4 +18,8 @@ public abstract class ScenarioItemVisitor<ResultType> implements IOperation<Resu
     protected abstract void visit(Scenario scenario);
 
     protected abstract ResultType getResult();
+
+    protected Scenario getScenario(){
+        return scenario;
+    }
 }
