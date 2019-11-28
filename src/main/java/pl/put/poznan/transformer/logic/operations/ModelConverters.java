@@ -3,6 +3,7 @@ package pl.put.poznan.transformer.logic.operations;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
+import pl.put.poznan.transformer.logic.models.scenarios.ScenarioRoot;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepBasicOperation;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepElse;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepForEach;
@@ -37,12 +38,14 @@ public class ModelConverters {
         return scenario;
     }
 
-    public static Scenario RawToScenario(RawScenario rawScenario){
+    public static ScenarioRoot RawToScenario(RawScenario rawScenario){
         String json = rawScenario.getScenarioJson();
-        String title = JsonPath.read(json, "$.Title");
-        String system_actor = JsonPath.read(json, "$.['System Actor']");
-        ArrayList<String> actors = JsonPath.read(json, "$.Actors[*]");
         JSONArray steps = JsonPath.read(json, "$.Steps[*]");
-        return findScenario(steps);
+        ScenarioRoot scenarioRoot = new ScenarioRoot();
+        scenarioRoot.scenario = findScenario(steps);
+        scenarioRoot.title = JsonPath.read(json, "$.Title");
+        scenarioRoot.systemActor = JsonPath.read(json, "$.['System Actor']");
+        scenarioRoot.actors = JsonPath.read(json, "$.Actors[*]");
+        return scenarioRoot;
     }
 }

@@ -3,6 +3,7 @@ package pl.put.poznan.transformer.logic.operations;
 import pl.put.poznan.transformer.logic.abstraction.ScenarioItemVisitor;
 import pl.put.poznan.transformer.logic.abstraction.ScenarioStep;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
+import pl.put.poznan.transformer.logic.models.scenarios.ScenarioRoot;
 import pl.put.poznan.transformer.rest.models.CountScenarioItemsResponse;
 import pl.put.poznan.transformer.rest.models.ScenarioWithNumberingResponse;
 
@@ -32,7 +33,11 @@ public class ScenarioWithNumbering extends ScenarioItemVisitor<ScenarioWithNumbe
 
     @Override
     public ScenarioWithNumberingResponse execute(){
-        visit("", 1, getScenario());
+        ScenarioRoot scenarioRoot = (ScenarioRoot)getScenario();
+        stringBuilder.append("Tytuł: ").append(scenarioRoot.title).append("\n");
+        stringBuilder.append("Aktorzy: ").append(scenarioRoot.actors).append("\n");
+        stringBuilder.append("System: ").append(scenarioRoot.systemActor).append("\n");
+        visit("", 1, scenarioRoot.scenario);
         return getResult();
     }
 
