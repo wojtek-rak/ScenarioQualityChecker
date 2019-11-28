@@ -9,21 +9,40 @@ import pl.put.poznan.transformer.rest.models.CreateScenarioResponse;
 import pl.put.poznan.transformer.rest.models.RawScenario;
 import pl.put.poznan.transformer.rest.models.ScenarioWithNumberingResponse;
 
+/**
+ * Główna klasa kontrolująca odbieranie requestów i wysyłanie odpowiedzi
+ *
+ * @author Jacek Gulij, Marek Subocz, Wojciech Rak
+ * @version 1.0
+ */
 @RestController
 public class ScenarioController {
 
+    /**
+     * Metoda przyjmująca requesta get i zwracająca ilość elementów wybranego scenariusza
+     *
+     * Przykładowy request: http://localhost:8080/count/12345678
+     *
+     * @param id Id scenariusza, jaki znajduje się już w bazie.
+     *
+     * @return Prosta klasa zawierająca jedno pole określające ilość elementów scenariusza
+     */
     @RequestMapping(value = "/count/{id}", method = RequestMethod.GET, produces = "application/json")
     public CountScenarioItemsResponse getCount(@PathVariable("id") int id) {
         return new CountScenarioItems()
                 .setScenario(getScenario(id))
                 .execute();
     }
-    public CountScenarioItemsResponse get_custom(Scenario scenario) {
-        return new CountScenarioItems()
-                .setScenario(scenario)
-                .execute();
-    }
 
+    /**
+     * Metoda przyjmująca requesta get i zwracająca ilość elementów warunkowych wybranego scenariusza
+     *
+     * Przykładowy request: http://localhost:8080/count/conditional/12345678
+     *
+     * @param id id scenariusza, jaki znajduje się już w bazie.
+     *
+     * @return prosta klasa zawierająca jedno pole określające ilość elementów scenariusza
+     */
     @RequestMapping(value = "/count/conditional/{id}", method = RequestMethod.GET, produces = "application/json")
     public CountScenarioItemsResponse getConditionalCount(@PathVariable("id") int id) {
         return new CountConditionalScenarioItems()
@@ -31,6 +50,13 @@ public class ScenarioController {
                 .execute();
     }
 
+    /**
+     * Metoda przyjmująca requesta post i zapisująca przekazany scenariusz do bazy
+     *
+     * @param json struktura przekazanego scenariusza
+     *
+     * @return prosta klasa zawierająca jedno pole określające id zapisanego w bazie scenariusza
+     */
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public CreateScenarioResponse post(@RequestBody String json) {
@@ -39,11 +65,31 @@ public class ScenarioController {
                 .execute();
     }
 
+    /**
+     * Metoda przyjmująca requesta get i zwracająca strukturę scenariusza o podanym id
+     *
+     * Przykładowy request: http://localhost:8080/12345678
+     *
+     * @param id struktura przekazanego scenariusza
+     *
+     * @return prosta klasa zawierająca jedno pole określające id zapisanego w bazie scenariusza
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     public Scenario getScenario(@PathVariable("id") int id) {
         return DataManager.getInstance().scenarioCollection.get(id);
     }
 
+
+    /**
+     * Metoda przyjmująca requesta get i zwracająca schemat wybranego
+     * scenariusza z ponumerowanymi elementami
+     *
+     * Przykładowy request: http://localhost:8080/ScenarioWithNumbering/12345678
+     *
+     * @param id Id scenariusza, jaki znajduje się już w bazie.
+     *
+     * @return Klasa zawierająca ponumerowany i podzielony na kroki scenariusz
+     */
     //ScenarioWithNumberingResponse
     @RequestMapping(value = "/ScenarioWithNumbering/{id}", method = RequestMethod.GET, produces = "text/plain")
     public String getScenarioWithNumbering(@PathVariable("id") int id) {

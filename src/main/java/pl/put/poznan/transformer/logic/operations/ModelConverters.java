@@ -12,7 +12,6 @@ import pl.put.poznan.transformer.rest.models.RawScenario;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-
 public class ModelConverters {
 
     private static Scenario findScenario(JSONArray steps){
