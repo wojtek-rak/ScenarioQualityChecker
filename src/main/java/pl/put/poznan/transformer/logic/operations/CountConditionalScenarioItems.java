@@ -14,7 +14,7 @@ import pl.put.poznan.transformer.rest.models.CountScenarioItemsResponse;
 public class CountConditionalScenarioItems extends ScenarioItemVisitor<CountScenarioItemsResponse> {
 
     /**
-     * Licznik kroków warunkowych
+     * Licznik kroków warunkowych.
      */
     private Integer amount = 0;
 
@@ -36,7 +36,7 @@ public class CountConditionalScenarioItems extends ScenarioItemVisitor<CountScen
     }
 
     /**
-     * Metoda zwracająca klasę z wynikiem liczenia
+     * Metoda zwracająca klasę z wynikiem liczenia.
      *
      * @return  rezultat w postaci klasy z jednym polem (generujemy z niej JSON-a na POST Response)
      */
