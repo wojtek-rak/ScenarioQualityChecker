@@ -1,0 +1,8 @@
+pl.put.poznan.transformer.app
+pl.put.poznan.transformer.logic.abstraction
+pl.put.poznan.transformer.logic.managers
+pl.put.poznan.transformer.logic.models.scenarios
+pl.put.poznan.transformer.logic.models.scenarios.items
+pl.put.poznan.transformer.logic.operations
+pl.put.poznan.transformer.rest.controllers
+pl.put.poznan.transformer.rest.models
