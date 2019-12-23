@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.managers.DataManager;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
 import pl.put.poznan.transformer.logic.models.scenarios.ScenarioRoot;
+import pl.put.poznan.transformer.logic.models.scenarios.StringBuilderWrapper;
 import pl.put.poznan.transformer.logic.operations.*;
 import pl.put.poznan.transformer.rest.models.CountScenarioItemsResponse;
 import pl.put.poznan.transformer.rest.models.CreateScenarioResponse;
@@ -98,7 +99,7 @@ public class ScenarioController {
     //ScenarioWithNumberingResponse
     @RequestMapping(value = "/ScenarioWithNumbering/{id}", method = RequestMethod.GET, produces = "text/plain")
     public String getScenarioWithNumbering(@PathVariable("id") String id) {
-        return new ScenarioWithNumbering()
+        return new ScenarioWithNumbering(new StringBuilderWrapper())
                 .setScenario(GetScenario(id))
                 .execute().scenario;
     }
