@@ -20,24 +20,6 @@ import java.util.ArrayList;
 public class ScenarioOperationsTest {
 
     @Test
-    public void execute_ValidScenarioObject_CountScenarioItems() {
-        int amount = new CountScenarioItems().setScenario(getTestScenario().scenario).execute().amount;
-        Assert.assertEquals(13, amount);
-    }
-
-    @Test
-    public void execute_EmptyScenarioObject_CountScenarioItems() {
-        int amount = new CountScenarioItems().setScenario(getEmptyScenario().scenario).execute().amount;
-        Assert.assertEquals(0, amount);
-    }
-
-    @Test
-    public void execute_ValidScenarioObject_CountConditionalScenarioItems() {
-        int amount = new CountConditionalScenarioItems().setScenario(getTestScenario().scenario).execute().amount;
-        Assert.assertEquals(2, amount);
-    }
-
-    @Test
     public void execute_ValidScenarioObject_ReturnProperString() {
         ScenarioWithNumbering scenarioWithNumbering = new ScenarioWithNumbering(new StringBuilderWrapper());
         scenarioWithNumbering.setScenario(getTestScenario());
@@ -79,12 +61,6 @@ public class ScenarioOperationsTest {
             "4.3.4. System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.\n" +
             "5. Bibliotekarz zatwierdza dodanie książki.\n" +
             "6. System informuje o poprawnym dodaniu książki.\n";
-
-    private static ScenarioRoot getEmptyScenario(){
-        ScenarioRoot scenarioRoot = new ScenarioRoot();
-        scenarioRoot.scenario = new Scenario();
-        return scenarioRoot;
-    }
 
     private static ScenarioRoot getTestScenario(){
         ScenarioRoot scenarioRoot = new ScenarioRoot();
