@@ -1,6 +1,5 @@
 package pl.put.poznan.transformer.test;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.*;
@@ -11,15 +10,32 @@ import pl.put.poznan.transformer.logic.models.scenarios.StringBuilderWrapper;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepBasicOperation;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepForEach;
 import pl.put.poznan.transformer.logic.models.scenarios.items.StepIf;
+import pl.put.poznan.transformer.logic.operations.CountConditionalScenarioItems;
+import pl.put.poznan.transformer.logic.operations.CountScenarioItems;
 import pl.put.poznan.transformer.logic.operations.ScenarioWithNumbering;
 import pl.put.poznan.transformer.rest.models.ScenarioWithNumberingResponse;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class ScenarioOperationsTest {
 
-public class ScenarioWithNumberingTest {
+    @Test
+    public void execute_ValidScenarioObject_CountScenarioItems() {
+        int amount = new CountScenarioItems().setScenario(getTestScenario().scenario).execute().amount;
+        Assert.assertEquals(13, amount);
+    }
+
+    @Test
+    public void execute_EmptyScenarioObject_CountScenarioItems() {
+        int amount = new CountScenarioItems().setScenario(getEmptyScenario().scenario).execute().amount;
+        Assert.assertEquals(0, amount);
+    }
+
+    @Test
+    public void execute_ValidScenarioObject_CountConditionalScenarioItems() {
+        int amount = new CountConditionalScenarioItems().setScenario(getTestScenario().scenario).execute().amount;
+        Assert.assertEquals(2, amount);
+    }
 
     @Test
     public void execute_ValidScenarioObject_ReturnProperString() {
@@ -28,7 +44,7 @@ public class ScenarioWithNumberingTest {
 
         ScenarioWithNumberingResponse scenarioWithNumberingResponse = scenarioWithNumbering.execute();
 
-        Assert.assertEquals(expectedScenario, scenarioWithNumberingResponse.scenario);
+        Assert.assertEquals(expectedScenarioString, scenarioWithNumberingResponse.scenario);
     }
 
     @Test
@@ -47,7 +63,7 @@ public class ScenarioWithNumberingTest {
         verify(stringBuilderWrapperMock, times(1)).append(Matchers.<ArrayList<String>>any());
     }
 
-    private String expectedScenario = "Tytuł: Title\n" +
+    private String expectedScenarioString = "Tytuł: Title\n" +
             "Aktorzy: [actor]\n" +
             "System: System\n" +
             "1. Bibliotekarz wybiera opcje dodania nowej pozycji książkowej\n" +
@@ -63,6 +79,12 @@ public class ScenarioWithNumberingTest {
             "4.3.4. System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.\n" +
             "5. Bibliotekarz zatwierdza dodanie książki.\n" +
             "6. System informuje o poprawnym dodaniu książki.\n";
+
+    private static ScenarioRoot getEmptyScenario(){
+        ScenarioRoot scenarioRoot = new ScenarioRoot();
+        scenarioRoot.scenario = new Scenario();
+        return scenarioRoot;
+    }
 
     private static ScenarioRoot getTestScenario(){
         ScenarioRoot scenarioRoot = new ScenarioRoot();
