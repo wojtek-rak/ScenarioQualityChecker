@@ -26,4 +26,7 @@ public class StepIf extends ScenarioStep {
     public String getScenarioHeader() {
         return String.format("IF: %s;", condition);
     }
+
+    @Override
+    public String extractText() { return condition; }
 }
