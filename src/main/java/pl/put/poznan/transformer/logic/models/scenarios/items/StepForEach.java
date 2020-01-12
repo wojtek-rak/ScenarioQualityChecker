@@ -26,4 +26,7 @@ public class StepForEach extends ScenarioStep {
     public String getScenarioHeader() {
         return String.format("FOR EACH: %s;", item);
     }
+
+    @Override
+    public String extractText() { return item; }
 }
