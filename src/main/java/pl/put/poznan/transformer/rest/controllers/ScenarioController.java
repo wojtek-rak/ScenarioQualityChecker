@@ -4,9 +4,11 @@ import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.managers.DataManager;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
 import pl.put.poznan.transformer.logic.models.scenarios.ScenarioRoot;
-import pl.put.poznan.transformer.logic.models.scenarios.StringBuilderWrapper;
 import pl.put.poznan.transformer.logic.operations.*;
-import pl.put.poznan.transformer.rest.models.*;
+import pl.put.poznan.transformer.rest.models.CountScenarioItemsResponse;
+import pl.put.poznan.transformer.rest.models.CreateScenarioResponse;
+import pl.put.poznan.transformer.rest.models.RawScenario;
+import pl.put.poznan.transformer.rest.models.ScenarioWithNumberingResponse;
 
 /**
  * Główna klasa kontrolująca odbieranie requestów i wysyłanie odpowiedzi
@@ -96,17 +98,9 @@ public class ScenarioController {
     //ScenarioWithNumberingResponse
     @RequestMapping(value = "/ScenarioWithNumbering/{id}", method = RequestMethod.GET, produces = "text/plain")
     public String getScenarioWithNumbering(@PathVariable("id") String id) {
-        return new ScenarioWithNumbering(new StringBuilderWrapper())
+        return new ScenarioWithNumbering()
                 .setScenario(GetScenario(id))
                 .execute().scenario;
-    }
-
-    @RequestMapping(value = "/NoActor/{id}", method = RequestMethod.GET, produces = "text/plain")
-    public String getStepsWithNoActor(@PathVariable("id") String id) {
-        return new StepsWithNoActor()
-                .setScenarioRoot(GetScenarioRoot(id))
-                .setScenario(GetScenarioRoot(id).scenario)
-                .execute().response;
     }
 
     private Scenario GetScenario(String id){

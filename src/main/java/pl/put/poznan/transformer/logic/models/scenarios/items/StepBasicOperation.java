@@ -22,7 +22,4 @@ public class StepBasicOperation extends ScenarioStep {
     public String getScenarioHeader() {
         return operation;
     }
-
-    @Override
-    public String extractText() { return operation; }
 }
