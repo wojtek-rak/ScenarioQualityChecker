@@ -5,15 +5,53 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p th:text="'Hello, ' + ${name} + '!'" />
-    <p th:text="'Maciej Gej!'" />
-    <form action="/action_page.php">
-        ID scenariusza <input type="text" name="id"><br>
-        <input type="submit" value="Pokaż ponumerowany scenariusz">
-        <input type="submit" value="Pokaż ilość kroków">
-        <input type="submit" value="Pokaż ilość kroków warunkowych">
-        <input type="submit" value="Pokaż kroki nie rozpoczęte przez aktorów">
-        <input type="submit" value="Pokaż ponumerowany scenariusz">
-    </form>
+<center>
+<!--    <form action="/action_page.php">-->
+<h1> Scenario Quality Checker</h1>
+        <p th:text="'Dostępne scenariusze: ' + ${ids_set}" />
+        ID scenariusza <input type="text" id="idinp" name="id"><br><br>
+        <button onclick="numbering()"> Pokaż ponumerowany scenariusz</button>
+        <button onclick="count()"> Pokaż ilość kroków</button>
+        <button onclick="conditional()"> Pokaż ilość kroków warunkowych </button>
+        <button onclick="noActor()" > Pokaż kroki nie rozpoczęte przez aktorów</button>
+<!--    </form>-->
+
+    <p id="demo"></p>
+</center>
+    <script>
+        function count() {
+            var address = document.getElementById("idinp").value;
+            // result()
+            window.open("/count/".concat(address),"_self")
+        }
+        function conditional() {
+            var address = document.getElementById("idinp").value;
+            window.open("/count/conditional/".concat(address),"_self")
+        }
+        function numbering() {
+            var address = document.getElementById("idinp").value;
+            window.open("/ScenarioWithNumbering/".concat(address),"_self")
+        }
+        function noActor() {
+            var address = document.getElementById("idinp").value;
+            window.open("/NoActor/".concat(address),"_self")
+        }
+        function result() {
+            var url = "https://stackoverflow.com"; // Change this to your URL
+            fetch(url)
+                .then(function(response) {
+                    if(response.ok) { // Check if response went through
+                        response.json().then(function(data) {
+                            document.getElementById("demo").value = "response";
+                            // var price_USD = document.getElementById('price-usd');
+                            // var USDPrice = '<p>USDEUR Price:' + data.something + '</p>';
+                            // price_USD.innerHTML += USDPrice;
+                        });
+                    } else { // Response wasn't ok. Check dev tools
+                        console.log("response failed?");
+                    }
+                });
+        }
+    </script>
 </body>
 </html>
