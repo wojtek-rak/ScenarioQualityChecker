@@ -109,6 +109,15 @@ public class ScenarioController {
                 .execute().response;
     }
 
+    @RequestMapping(value = "/RestrictDeep/{level}", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public CreateScenarioResponse restrictDeep(@RequestBody String json, @PathVariable("level") int level) {
+        return new RestrictScenarioDeep()
+                .setRawScenario(new RawScenario(json))
+                .setMaxLevel(level)
+                .execute();
+    }
+
     private Scenario GetScenario(String id){
         return DataManager.getInstance().scenarioCollection.get(id);
     }
