@@ -4,11 +4,9 @@ import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.managers.DataManager;
 import pl.put.poznan.transformer.logic.models.scenarios.Scenario;
 import pl.put.poznan.transformer.logic.models.scenarios.ScenarioRoot;
+import pl.put.poznan.transformer.logic.models.scenarios.StringBuilderWrapper;
 import pl.put.poznan.transformer.logic.operations.*;
-import pl.put.poznan.transformer.rest.models.CountScenarioItemsResponse;
-import pl.put.poznan.transformer.rest.models.CreateScenarioResponse;
-import pl.put.poznan.transformer.rest.models.RawScenario;
-import pl.put.poznan.transformer.rest.models.ScenarioWithNumberingResponse;
+import pl.put.poznan.transformer.rest.models.*;
 
 /**
  * Główna klasa kontrolująca odbieranie requestów i wysyłanie odpowiedzi
@@ -98,9 +96,26 @@ public class ScenarioController {
     //ScenarioWithNumberingResponse
     @RequestMapping(value = "/ScenarioWithNumbering/{id}", method = RequestMethod.GET, produces = "text/plain")
     public String getScenarioWithNumbering(@PathVariable("id") String id) {
-        return new ScenarioWithNumbering()
+        return new ScenarioWithNumbering(new StringBuilderWrapper())
                 .setScenario(GetScenario(id))
                 .execute().scenario;
+    }
+
+    @RequestMapping(value = "/NoActor/{id}", method = RequestMethod.GET, produces = "text/plain")
+    public String getStepsWithNoActor(@PathVariable("id") String id) {
+        return new StepsWithNoActor()
+                .setScenarioRoot(GetScenarioRoot(id))
+                .setScenario(GetScenarioRoot(id).scenario)
+                .execute().response;
+    }
+
+    @RequestMapping(value = "/RestrictDeep/{level}", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public CreateScenarioResponse restrictDeep(@RequestBody String json, @PathVariable("level") int level) {
+        return new RestrictScenarioDeep()
+                .setRawScenario(new RawScenario(json))
+                .setMaxLevel(level)
+                .execute();
     }
 
     private Scenario GetScenario(String id){

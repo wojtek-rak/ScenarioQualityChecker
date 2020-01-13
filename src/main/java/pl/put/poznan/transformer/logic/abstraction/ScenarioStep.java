@@ -7,4 +7,5 @@ import java.util.List;
 public abstract class ScenarioStep {
     public abstract List<Scenario> getSubScenarios();
     public abstract String getScenarioHeader();
+    public abstract String extractText();
 }

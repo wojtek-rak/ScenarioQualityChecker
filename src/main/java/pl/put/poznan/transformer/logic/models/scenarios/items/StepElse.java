@@ -26,4 +26,7 @@ public class StepElse extends ScenarioStep{
     public String getScenarioHeader() {
         return String.format("ELSE: %s;", condition);
     }
+
+    @Override
+    public String extractText() { return condition; }
 }
