@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="'Hello, ' + ${name} + '!'" />
+    <p th:text="'Maciej Gej!'" />
+    <form action="/action_page.php">
+        ID scenariusza <input type="text" name="id"><br>
+        <input type="submit" value="Pokaż ponumerowany scenariusz">
+        <input type="submit" value="Pokaż ilość kroków">
+        <input type="submit" value="Pokaż ilość kroków warunkowych">
+        <input type="submit" value="Pokaż kroki nie rozpoczęte przez aktorów">
+        <input type="submit" value="Pokaż ponumerowany scenariusz">
+    </form>
+</body>
+</html>
